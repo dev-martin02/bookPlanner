@@ -44,10 +44,10 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
           X
         </button>
       </div>
-      <div className="bg-gradient-to-br from-blue-100 to-blue-200 w-full max-w-2xl rounded-lg shadow-2xl overflow-hidden">
+      <div className="bg-gradient-to-br from-blue-50 to-blue-200 w-full max-w-2xl rounded-lg shadow-2xl overflow-hidden">
         <div className="p-6 md:p-8">
           <h2 className="text-3xl font-bold text-blue-800 mb-6 text-center">
-            Add Book
+            New Book Form
           </h2>
           <form onSubmit={handleForm} className="space-y-6">
             <div className="relative">
