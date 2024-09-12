@@ -23,6 +23,12 @@ export default function OneBook() {
   //Notes
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [notesArr, setNotesArr] = useState([]);
+
+  const deleteNote = (id: number) => {
+    //@ts-ignore
+    const newArr = notesArr.filter((note) => note.id !== id);
+    setNotesArr(newArr);
+  };
   function handleForm(e: FormEvent) {
     e.preventDefault();
 
@@ -213,7 +219,10 @@ export default function OneBook() {
             className="flex justify-between items-center p-2 bg-gray-100 rounded"
           >
             <p>{noteText}</p>
-            <button className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 flex items-center">
+            <button
+              onClick={() => deleteNote(id)}
+              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 flex items-center"
+            >
               <Trash2 className="w-4 h-4 mr-1" />
               Delete
             </button>
