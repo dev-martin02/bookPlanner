@@ -1,5 +1,7 @@
 import { FormEvent, useState } from "react";
 import { PlusCircle, Trash2, BookOpen, Eye } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { bookStore } from "../store/book.store";
 
 type Chapters = {
   chapterNum: string;
@@ -15,6 +17,8 @@ type Note = {
 export default function OneBook() {
   const [chapterArr, setChapterArr] = useState([]);
   const [showChapterForm, setShowChapterForm] = useState(false);
+  const { books } = bookStore();
+  const { id } = useParams();
 
   //Notes
   const [showNoteForm, setShowNoteForm] = useState(false);
@@ -115,7 +119,6 @@ export default function OneBook() {
     //@ts-ignore
     setNotesArr((prevState) => [...prevState, note]);
   }
-  console.log(notesArr);
 
   const addNote = () => {
     return (
@@ -146,12 +149,14 @@ export default function OneBook() {
       </form>
     );
   };
+  //@ts-ignore
+  const { bookName } = books.find((book) => book.id === Number(id));
 
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h2 className="text-2xl font-bold text-center mb-6 flex items-center justify-center">
         <BookOpen className="w-8 h-8 mr-2" />
-        Name of the book plus a picture
+        {bookName}
       </h2>
 
       {/* <div className="mb-8">

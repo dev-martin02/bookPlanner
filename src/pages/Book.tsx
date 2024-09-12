@@ -11,7 +11,7 @@ export default function Book() {
       <p>{author}</p>
       <div className=" flex flex-row-reverse">
         <Link
-          to={"onebook"}
+          to={`book/${id}`}
           className="px-2 py-1 flex gap-2 w-32 border-2 rounded bg-blue-500 text-white border-blue-500 hover:bg-blue-400 hover:border-blue-400  "
         >
           <Eye /> See notes

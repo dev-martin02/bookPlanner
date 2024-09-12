@@ -6,12 +6,12 @@ import { BadgePlus, BookMarked } from "lucide-react";
 export default function Home() {
   const [displayForm, setDisplayForm] = useState(false);
   return (
-    <main className="px-4 mt-5">
+    <main className="max-w-4xl mx-auto p-6 ">
       <h1 className="text-4xl font-bold flex gap-1 items-center justify-center text-blue-700 ">
         <BookMarked size={35} /> Book Planner
       </h1>
 
-      <span className="font-semibold text-2xl text-blue-600 ">
+      <span className="block mt-7 font-semibold text-2xl text-blue-600 ">
         All your Books
       </span>
       <button
