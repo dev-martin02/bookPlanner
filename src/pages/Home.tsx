@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Book from "./Book";
-import { AddBookForm } from "../form/AddBookForm";
+import { AddBookForm } from "../components/form/AddBookForm";
 import { BadgePlus, BookMarked } from "lucide-react";
 
 export default function Home() {
