@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { PlusCircle, Trash2, BookOpen, Eye } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { bookStore } from "../store/book.store";
 import { AddNoteForm } from "./form/AddNoteForm";
 import { AddChapterForm } from "./form/AddChapterForm";
 
 export default function OneBook() {
   const [showChapterForm, setShowChapterForm] = useState(false);
-  const { books, generalNoteArr, deleteGenralNote, bookChapters } = bookStore();
+  const {
+    books,
+    generalNoteArr,
+    deleteGenralNote,
+    bookChapter: bookChapters,
+  } = bookStore();
   const { id } = useParams<{ id: string }>();
 
   const bookId = id as string;
@@ -52,10 +57,13 @@ export default function OneBook() {
                 className="flex justify-between items-center p-2 bg-white rounded shadow"
               >
                 <h3 className="text-lg font-medium">{`${chapterNum}: ${chapterName}`}</h3>
-                <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center">
+                <Link
+                  to={`${id}`}
+                  className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center"
+                >
                   <Eye className="w-4 h-4 mr-1" />
                   See Notes
-                </button>
+                </Link>
               </div>
             ))}
         </div>

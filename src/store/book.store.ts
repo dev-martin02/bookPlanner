@@ -22,9 +22,15 @@ export const bookStore = create<storeObj>((set) => ({
       generalNoteArr: state.generalNoteArr.filter((note) => note.id !== id),
     })),
 
-  bookChapters: [],
+  bookChapter: [],
   addChapter: (chapter) =>
     set((state) => ({
-      bookChapters: [...state.bookChapters, chapter],
+      bookChapter: [...state.bookChapter, chapter],
+    })),
+
+  chapterNoteArr: [],
+  addChapterNote: (note) =>
+    set((state) => ({
+      chapterNoteArr: [...state.chapterNoteArr, note],
     })),
 }));

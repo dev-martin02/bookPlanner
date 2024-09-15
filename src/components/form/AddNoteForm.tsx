@@ -21,9 +21,8 @@ export const AddNoteForm = ({ book }: AddChapterFormProps) => {
       bookId: book,
     };
 
-    for (const value of formData.entries()) {
-      //@ts-ignore
-      note[value[0]] = value[1];
+    for (const [key, value] of formData.entries()) {
+      note[key as keyof Note] = value as string;
     }
     note["id"] = crypto.randomUUID();
 

@@ -4,13 +4,8 @@ import Home from "./pages/Home";
 import OneBook from "./components/OneBook";
 import SignUp from "./components/user/SignUp";
 import Login from "./components/user/Login";
-/*
-   Book Planner
-    - Get the name of the book 
-    - Write notes of the books
-      - CRUD operations
-    - User can have multiples Books
-*/
+import { Chapter } from "./components/book/Chapter";
+
 function App() {
   return (
     <>
@@ -20,6 +15,7 @@ function App() {
         <Route path="signup" element={<SignUp />} />
         <Route path="login" element={<Login />} />
         <Route path="book/:id" element={<OneBook />} />
+        <Route path="book/:id/:chapterId" element={<Chapter />} />
       </Routes>
     </>
   );

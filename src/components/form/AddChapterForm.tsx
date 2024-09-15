@@ -22,9 +22,8 @@ export const AddChapterForm = ({ book }: AddChapterFormProps) => {
       bookId: book,
     };
 
-    for (const value of formData.entries()) {
-      //@ts-ignore
-      chapter[value[0]] = value[1];
+    for (const [key, value] of formData.entries()) {
+      chapter[key as keyof Chapter] = value as string;
     }
     chapter["id"] = chapter["chapterNum"];
 
