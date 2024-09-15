@@ -28,3 +28,9 @@ export type Chapter = {
   id: string;
   bookId: string;
 };
+
+export interface Account {
+  name: string;
+  email: string;
+  password: string;
+}
