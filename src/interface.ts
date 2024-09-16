@@ -16,6 +16,7 @@ export type storeObj = {
   addChapter: (chapter: Chapter) => void;
   chapterNoteArr: Array<ChapterNote>;
   addChapterNote: (note: ChapterNote) => void;
+  deleteChapterNote: (id: string) => void;
 };
 
 export type Book = {

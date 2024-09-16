@@ -33,4 +33,8 @@ export const bookStore = create<storeObj>((set) => ({
     set((state) => ({
       chapterNoteArr: [...state.chapterNoteArr, note],
     })),
+  deleteChapterNote: (id) =>
+    set((state) => ({
+      chapterNoteArr: state.chapterNoteArr.filter((note) => note.id !== id),
+    })),
 }));
