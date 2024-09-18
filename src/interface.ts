@@ -11,7 +11,7 @@ export type storeObj = {
   incrementId: () => void;
   generalNoteArr: Array<Note>;
   addGeneralNote: (note: Note) => void;
-  deleteGenralNote: (id: string) => void;
+  deleteGeneralNote: (id: string) => void;
   bookChapter: Array<Chapter>;
   addChapter: (chapter: Chapter) => void;
   chapterNoteArr: Array<ChapterNote>;

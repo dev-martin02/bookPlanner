@@ -6,7 +6,7 @@ interface AddBookFormProps {
 }
 
 export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
-  const { addBook, currentAvaibleBookID, incrementId } = bookStore();
+  const { addBook, currentAvaibleBookID, incrementId, books } = bookStore();
 
   function handleForm(e: FormEvent) {
     e.preventDefault();
@@ -31,8 +31,20 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
       value[name[0] as keyof formObj] = name[1];
     }
     value["id"] = currentAvaibleBookID;
-    incrementId();
-    addBook(value);
+
+    const bookOnList = books.find(
+      ({ bookName, author }) =>
+        bookName.toLowerCase() === value.bookName.toLowerCase() &&
+        author.toLocaleLowerCase() === value.author.toLocaleLowerCase()
+    );
+
+    if (!bookOnList) {
+      incrementId();
+      addBook(value);
+      return;
+    }
+
+    console.log("book is on the list ");
   }
 
   return (
