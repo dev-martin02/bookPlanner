@@ -8,13 +8,14 @@ import { bookStore } from "../store/book.store";
 export default function Home() {
   const { currentUser } = bookStore();
 
-  const accountButton = currentUser ? (
-    <button>{currentUser.name}</button>
-  ) : (
-    <Link to={"/login"} className="border-2 rounded px-2 py-1 ">
-      Login
-    </Link>
-  );
+  const accountButton =
+    currentUser.name.length !== 0 ? (
+      <button>{currentUser.name}</button>
+    ) : (
+      <Link to={"/login"} className="border-2 rounded px-2 py-1 ">
+        Login
+      </Link>
+    );
 
   const [displayForm, setDisplayForm] = useState(false);
   return (
