@@ -8,7 +8,7 @@ interface AddBookFormProps {
 }
 
 export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
-  const { addBook, currentAvaibleBookID, incrementId, currentUser } =
+  const { addBook, currentAvaibleBookID, incrementId, currentUser, books } =
     bookStore();
 
   function handleForm(e: FormEvent) {
@@ -35,14 +35,25 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
 
     newBook["id"] = currentAvaibleBookID;
 
-    addBookToDB(newBook)
-      .then((response) => {
-        console.log(response);
-        addBook(newBook);
-        incrementId();
-        alert("new book was added it!");
-      })
-      .catch((e) => alert("there was an error " + e.message));
+    const bookOnList = books.find(
+      ({ bookName, author }) =>
+        bookName.toLowerCase() === newBook.bookName.toLowerCase() &&
+        author.toLocaleLowerCase() === newBook.author.toLocaleLowerCase()
+    );
+
+    if (!bookOnList) {
+      addBookToDB(newBook)
+        .then((response) => {
+          console.log(response);
+          addBook(newBook);
+          incrementId();
+          alert("new book was added it!");
+        })
+        .catch((e) => alert("there was an error " + e.message));
+      return;
+    }
+
+    alert("this book is on the list");
   }
 
   return (

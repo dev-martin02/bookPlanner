@@ -17,7 +17,7 @@ export const bookStore = create<storeObj>((set) => ({
     set((state) => ({
       generalNoteArr: [...state.generalNoteArr, newNote],
     })),
-  deleteGenralNote: (id) =>
+  deleteGeneralNote: (id) =>
     set((state) => ({
       generalNoteArr: state.generalNoteArr.filter((note) => note.id !== id),
     })),

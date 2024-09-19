@@ -10,7 +10,7 @@ export default function OneBook() {
   const {
     books,
     generalNoteArr,
-    deleteGenralNote,
+    deleteGeneralNote,
     bookChapter: bookChapters,
   } = bookStore();
   const { id } = useParams<{ id: string }>();
@@ -92,7 +92,7 @@ export default function OneBook() {
             >
               <p>{note}</p>
               <button
-                onClick={() => deleteGenralNote(id)}
+                onClick={() => deleteGeneralNote(id)}
                 className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 flex items-center"
               >
                 <Trash2 className="w-4 h-4 mr-1" />
