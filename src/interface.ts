@@ -19,6 +19,7 @@ export type storeObj = {
   deleteChapterNote: (id: string) => void;
   currentUser: userInfo;
   setCurrentUser: (userName: userInfo) => void;
+  setFetchedBooks: (book: Array<Book>) => void;
 };
 
 export type Book = {

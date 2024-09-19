@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Book from "./Book";
 import { AddBookForm } from "../components/form/AddBookForm";
 import { BadgePlus, BookMarked } from "lucide-react";
 import { Link } from "react-router-dom";
 import { bookStore } from "../store/book.store";
+import { getUserBook } from "../api/SupaApi";
 
 export default function Home() {
-  const { currentUser } = bookStore();
+  const { currentUser, setFetchedBooks } = bookStore();
 
   const accountButton =
     currentUser.name.length !== 0 ? (
@@ -18,6 +19,15 @@ export default function Home() {
     );
 
   const [displayForm, setDisplayForm] = useState(false);
+
+  useEffect(() => {
+    if (currentUser.id.length !== 0) {
+      getUserBook(currentUser.id)
+        //@ts-ignore
+        .then((userBook) => setFetchedBooks(userBook))
+        .catch((e) => alert(e));
+    }
+  }, [currentUser]);
   return (
     <main className="max-w-4xl mx-auto p-6 ">
       <h1 className="text-4xl font-bold flex gap-1 items-center justify-center text-blue-700 ">

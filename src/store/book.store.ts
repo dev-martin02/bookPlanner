@@ -11,6 +11,7 @@ export const bookStore = create<storeObj>((set) => ({
     set((state) => ({
       books: [...state.books, newBook],
     })),
+  setFetchedBooks: (userBook) => set(() => ({ books: userBook })),
 
   generalNoteArr: [],
   addGeneralNote: (newNote) =>

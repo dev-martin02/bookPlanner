@@ -59,3 +59,12 @@ export async function addBookToDB(book: Book) {
   if (error) throw error;
   return "Book was succefully added it!";
 }
+
+export async function getUserBook(id: string) {
+  const { data, error } = await supabase.from("books").select();
+  if (error) return error;
+
+  const userData = data.filter((response) => response.userId === id);
+  if (!userData) throw "There is not book";
+  return userData;
+}
