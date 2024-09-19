@@ -1,5 +1,15 @@
 import { supabase } from "../database/Supabase";
-import { Account } from "../interface";
+import { Account, Book } from "../interface";
+
+// Get User
+async function getUserProfile(id: string) {
+  const { data, error } = await supabase.from("profile").select();
+  if (error) return error;
+
+  const getUser = data.find((user) => user.id === id);
+  if (!getUser) return "User Not found";
+  return getUser;
+}
 
 export async function loginApi(userObj: Account) {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -7,10 +17,20 @@ export async function loginApi(userObj: Account) {
     password: userObj.password,
   });
   if (error) return error;
-
-  return data.user;
+  const user = await getUserProfile(data.user.id);
+  return user;
 }
 
+// New User
+async function createProfile(profileData: {
+  id: string;
+  name: string;
+  email: string;
+}) {
+  const { error } = await supabase.from("profile").insert([profileData]);
+
+  return { error };
+}
 export async function createNewUser(userObj: Account) {
   const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
     email: userObj.email,
@@ -22,7 +42,7 @@ export async function createNewUser(userObj: Account) {
 
   if (signUpData.user) {
     const profileData = {
-      user_id: signUpData.user.id,
+      id: signUpData.user.id,
       name: userObj.name,
       email: userObj.email,
     };
@@ -33,12 +53,9 @@ export async function createNewUser(userObj: Account) {
   }
 }
 
-async function createProfile(profileData: {
-  user_id: string;
-  name: string;
-  email: string;
-}) {
-  const { error } = await supabase.from("profiles").insert([profileData]);
-
-  return { error };
+// Book interaction
+export async function addBookToDB(book: Book) {
+  const { error } = await supabase.from("books").insert(book);
+  if (error) throw error;
+  return "Book was succefully added it!";
 }

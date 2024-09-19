@@ -17,11 +17,14 @@ export type storeObj = {
   chapterNoteArr: Array<ChapterNote>;
   addChapterNote: (note: ChapterNote) => void;
   deleteChapterNote: (id: string) => void;
+  currentUser: userInfo;
+  setCurrentUser: (userName: userInfo) => void;
 };
 
 export type Book = {
   bookName: string;
   author: string;
+  userId: string;
   id: number;
 };
 
@@ -42,4 +45,11 @@ export interface ChapterNote {
   note: string;
   id: string;
   chapterId: string;
+}
+
+export interface userInfo {
+  created_at: string;
+  email: string;
+  id: string;
+  name: string;
 }

@@ -37,4 +37,12 @@ export const bookStore = create<storeObj>((set) => ({
     set((state) => ({
       chapterNoteArr: state.chapterNoteArr.filter((note) => note.id !== id),
     })),
+
+  currentUser: {
+    created_at: "",
+    email: "",
+    id: "",
+    name: "",
+  },
+  setCurrentUser: (userName) => set(() => ({ currentUser: userName })),
 }));

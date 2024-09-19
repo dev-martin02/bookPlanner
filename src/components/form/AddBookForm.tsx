@@ -1,12 +1,15 @@
 import React, { FormEvent } from "react";
 import { bookStore } from "../../store/book.store";
+import { addBookToDB } from "../../api/SupaApi";
+import { Book } from "../../interface";
 
 interface AddBookFormProps {
   setDisplayForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
-  const { addBook, currentAvaibleBookID, incrementId } = bookStore();
+  const { addBook, currentAvaibleBookID, incrementId, currentUser } =
+    bookStore();
 
   function handleForm(e: FormEvent) {
     e.preventDefault();
@@ -14,25 +17,32 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    type formObj = {
-      bookName: string;
-      author: string;
-      id: number;
-    };
-
-    const value: formObj = {
+    const newBook: Book = {
       bookName: "",
       author: "",
+      userId: currentUser.id,
       id: 0,
     };
 
-    for (const name of formData.entries()) {
-      //@ts-ignore
-      value[name[0] as keyof formObj] = name[1];
+    for (const [key, name] of formData.entries()) {
+      if (key in newBook) {
+        const typedKey = key as keyof Book;
+        if (typedKey !== "id") {
+          newBook[typedKey] = name as string;
+        }
+      }
     }
-    value["id"] = currentAvaibleBookID;
-    incrementId();
-    addBook(value);
+
+    newBook["id"] = currentAvaibleBookID;
+
+    addBookToDB(newBook)
+      .then((response) => {
+        console.log(response);
+        addBook(newBook);
+        incrementId();
+        alert("new book was added it!");
+      })
+      .catch((e) => alert("there was an error " + e.message));
   }
 
   return (
