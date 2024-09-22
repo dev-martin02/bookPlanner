@@ -1,13 +1,17 @@
 import { useParams } from "react-router-dom";
-import { bookStore } from "../../store/book.store";
+import { useBookStore } from "../../store/book.store";
 import { FormEvent, useState } from "react";
 import { PlusCircle, Trash2, X } from "lucide-react";
 import { ChapterNote } from "../../interface";
 
 export const Chapter = () => {
   const urlChapterId = useParams<{ chapterId: string }>();
-  const { bookChapter, addChapterNote, chapterNoteArr, deleteChapterNote } =
-    bookStore();
+  const {
+    bookChapters: bookChapter,
+    addChapterNote,
+    chapterNoteArr,
+    deleteChapterNote,
+  } = useBookStore();
   const [showNoteForm, setShowNoteForm] = useState(false);
 
   const [showQuestions, setShowQuestion] = useState(false);

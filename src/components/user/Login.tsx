@@ -2,10 +2,10 @@ import { FormEvent } from "react";
 import { Account } from "../../interface";
 import { loginApi } from "../../api/SupaApi";
 import { Link } from "react-router-dom";
-import { bookStore } from "../../store/book.store";
+import { useBookStore } from "../../store/book.store";
 
 export default function Login() {
-  const { setCurrentUser } = bookStore();
+  const { setCurrentUser } = useBookStore();
   const handleLoginForm = async (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;

@@ -1,6 +1,6 @@
 import { FormEvent } from "react";
 import { Note } from "../../interface";
-import { bookStore } from "../../store/book.store";
+import { useBookStore } from "../../store/book.store";
 import { PlusCircle } from "lucide-react";
 
 interface AddChapterFormProps {
@@ -8,7 +8,7 @@ interface AddChapterFormProps {
 }
 
 export const AddNoteForm = ({ book }: AddChapterFormProps) => {
-  const { addGeneralNote } = bookStore();
+  const { addGeneralNote } = useBookStore();
   function handleNoteForm(e: FormEvent) {
     e.preventDefault();
 

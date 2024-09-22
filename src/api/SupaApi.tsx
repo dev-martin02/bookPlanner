@@ -1,5 +1,5 @@
 import { supabase } from "../database/Supabase";
-import { Account, Book } from "../interface";
+import { Account, Book, Chapter } from "../interface";
 
 // Get User
 async function getUserProfile(id: string) {
@@ -67,4 +67,22 @@ export async function getUserBook(id: string) {
   const userData = data.filter((response) => response.userId === id);
   if (!userData) throw "There is not book";
   return userData;
+}
+
+// CRUD chapters
+export async function addChapterToDB(chapter: Chapter) {
+  const { error } = await supabase.from("chapters").insert(chapter);
+
+  if (error) throw error;
+  return "New Chapter was added it!";
+}
+
+export async function getChapters(id: number) {
+  const { data, error } = await supabase.from("chapters").select();
+  if (error) throw error;
+
+  const bookChapter = data.filter((response) => response.bookId === id);
+  if (!bookChapter) return { message: "There are no chapters for this book" };
+  console.log(bookChapter);
+  return bookChapter;
 }

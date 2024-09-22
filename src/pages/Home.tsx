@@ -3,11 +3,11 @@ import Book from "./Book";
 import { AddBookForm } from "../components/form/AddBookForm";
 import { BadgePlus, BookMarked } from "lucide-react";
 import { Link } from "react-router-dom";
-import { bookStore } from "../store/book.store";
+import { useBookStore } from "../store/book.store";
 import { getUserBook } from "../api/SupaApi";
 
 export default function Home() {
-  const { currentUser, setFetchedBooks } = bookStore();
+  const { currentUser, setFetchedBooks } = useBookStore();
 
   const accountButton =
     currentUser.name.length !== 0 ? (

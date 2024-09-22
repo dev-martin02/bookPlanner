@@ -1,13 +1,15 @@
 import { PlusCircle } from "lucide-react";
 import { FormEvent } from "react";
 import { Chapter } from "../../interface";
-import { bookStore } from "../../store/book.store";
+import { useBookStore } from "../../store/book.store";
+import { addChapterToDB } from "../../api/SupaApi";
+import { generateUniqueID } from "../../util/util";
 
 interface AddChapterFormProps {
   book: string;
 }
 export const AddChapterForm = ({ book }: AddChapterFormProps) => {
-  const { addChapter } = bookStore();
+  const { addChapter } = useBookStore();
 
   function handleChapterForm(e: FormEvent) {
     e.preventDefault();
@@ -18,16 +20,23 @@ export const AddChapterForm = ({ book }: AddChapterFormProps) => {
     const chapter: Chapter = {
       chapterNum: "",
       chapterName: "",
-      id: "",
+      id: 0,
       bookId: book,
     };
 
     for (const [key, value] of formData.entries()) {
-      chapter[key as keyof Chapter] = value as string;
+      if (key in chapter) {
+        const typedKey = key as keyof Chapter;
+        if (typedKey !== "id") {
+          chapter[typedKey] = value as string;
+        }
+      }
     }
-    chapter["id"] = chapter["chapterNum"];
+    chapter["id"] = generateUniqueID();
 
-    addChapter(chapter);
+    addChapterToDB(chapter)
+      .then(() => addChapter(chapter))
+      .catch((e) => console.log(e));
   }
 
   return (
@@ -42,7 +51,7 @@ export const AddChapterForm = ({ book }: AddChapterFormProps) => {
             name="chapterNum"
             id="chapterNum"
             placeholder=" "
-            className="peer mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 placeholder-transparent"
+            className="peer mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 placeholder-transparent p-1 "
           />
           <label
             htmlFor="chapterNum"
@@ -61,7 +70,7 @@ export const AddChapterForm = ({ book }: AddChapterFormProps) => {
             name="chapterName"
             id="chapterName"
             placeholder=" "
-            className="peer mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 placeholder-transparent"
+            className="peer p-1 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 placeholder-transparent"
           />
           <label
             htmlFor="chapterName"

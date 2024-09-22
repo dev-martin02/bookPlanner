@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { storeObj } from "../interface";
 
-export const bookStore = create<storeObj>((set) => ({
+export const useBookStore = create<storeObj>((set) => ({
   currentAvaibleBookID: 1,
   incrementId: () =>
     set((state) => ({ currentAvaibleBookID: state.currentAvaibleBookID + 1 })),
@@ -23,11 +23,12 @@ export const bookStore = create<storeObj>((set) => ({
       generalNoteArr: state.generalNoteArr.filter((note) => note.id !== id),
     })),
 
-  bookChapter: [],
+  bookChapters: [],
   addChapter: (chapter) =>
     set((state) => ({
-      bookChapter: [...state.bookChapter, chapter],
+      bookChapters: [...state.bookChapters, chapter],
     })),
+  setFetchedChapter: (chapterArr) => set(() => ({ bookChapters: chapterArr })),
 
   chapterNoteArr: [],
   addChapterNote: (note) =>

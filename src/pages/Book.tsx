@@ -1,9 +1,9 @@
-import { bookStore } from "../store/book.store";
+import { useBookStore } from "../store/book.store";
 import { Link } from "react-router-dom";
 import { Eye } from "lucide-react";
 
 export default function Book() {
-  const { books } = bookStore();
+  const { books } = useBookStore();
 
   const allBooks = books.map(({ bookName, author, id }) => (
     <div key={id} className="flex flex-col gap-1 border-2 rounded w-11/12 p-2">

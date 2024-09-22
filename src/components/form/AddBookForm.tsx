@@ -1,7 +1,8 @@
 import React, { FormEvent } from "react";
-import { bookStore } from "../../store/book.store";
+import { useBookStore } from "../../store/book.store";
 import { addBookToDB } from "../../api/SupaApi";
 import { Book } from "../../interface";
+import { generateUniqueID } from "../../util/util";
 
 interface AddBookFormProps {
   setDisplayForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,7 +10,7 @@ interface AddBookFormProps {
 
 export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
   const { addBook, currentAvaibleBookID, incrementId, currentUser, books } =
-    bookStore();
+    useBookStore();
 
   function handleForm(e: FormEvent) {
     e.preventDefault();
@@ -33,7 +34,7 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
       }
     }
 
-    newBook["id"] = currentAvaibleBookID;
+    newBook["id"] = generateUniqueID();
 
     const bookOnList = books.find(
       ({ bookName, author }) =>
