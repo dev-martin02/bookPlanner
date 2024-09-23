@@ -83,6 +83,5 @@ export async function getChapters(id: number) {
 
   const bookChapter = data.filter((response) => response.bookId === id);
   if (!bookChapter) return { message: "There are no chapters for this book" };
-  console.log(bookChapter);
   return bookChapter;
 }

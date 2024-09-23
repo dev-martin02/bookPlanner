@@ -9,7 +9,7 @@ interface AddChapterFormProps {
   book: string;
 }
 export const AddChapterForm = ({ book }: AddChapterFormProps) => {
-  const { addChapter } = useBookStore();
+  const { addChapter, bookChapters } = useBookStore();
 
   function handleChapterForm(e: FormEvent) {
     e.preventDefault();
@@ -42,7 +42,7 @@ export const AddChapterForm = ({ book }: AddChapterFormProps) => {
   return (
     <form
       onSubmit={handleChapterForm}
-      className="space-y-4 bg-white p-6 rounded-lg shadow-md"
+      className="space-y-4 bg-white p-6 rounded-lg mb-4 shadow-md"
     >
       <div className="space-y-9">
         <div className="relative">

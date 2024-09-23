@@ -9,8 +9,7 @@ interface AddBookFormProps {
 }
 
 export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
-  const { addBook, currentAvaibleBookID, incrementId, currentUser, books } =
-    useBookStore();
+  const { addBook, currentUser, books } = useBookStore();
 
   function handleForm(e: FormEvent) {
     e.preventDefault();
@@ -47,7 +46,6 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
         .then((response) => {
           console.log(response);
           addBook(newBook);
-          incrementId();
           alert("new book was added it!");
         })
         .catch((e) => alert("there was an error " + e.message));

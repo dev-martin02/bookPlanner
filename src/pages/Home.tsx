@@ -13,7 +13,10 @@ export default function Home() {
     currentUser.name.length !== 0 ? (
       <button>{currentUser.name}</button>
     ) : (
-      <Link to={"/login"} className="border-2 rounded px-2 py-1 ">
+      <Link
+        to="/login"
+        className="border-2 border-blue-500 text-blue-500 bg-white rounded-lg px-2 py-1  font-semibold transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      >
         Login
       </Link>
     );

@@ -33,7 +33,7 @@ export const Chapter = () => {
   ));
   // Get the chapter
   const currentChapter = bookChapter.filter(
-    (chapter) => chapter.chapterNum === urlChapterId.chapterId
+    (chapter) => chapter.id === Number(urlChapterId.chapterId)
   );
 
   function handleNoteForm(e: FormEvent) {
