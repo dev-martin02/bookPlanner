@@ -1,12 +1,16 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { Account } from "../../interface";
 import { loginApi } from "../../api/SupaApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useBookStore } from "../../store/book.store";
 import { Mail, Lock } from "lucide-react";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function Login() {
   const { setCurrentUser } = useBookStore();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const handleLoginForm = async (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -23,13 +27,22 @@ export default function Login() {
     }
 
     const response = await loginApi(formObj);
-    console.log(response);
-    setCurrentUser(response);
+    setLoading(true);
+    if (response) {
+      setCurrentUser(response);
+      setLoading(false);
+      navigate("/");
+    }
   };
 
   return (
     <div className="flex justify-center h-screen items-center bg-gray-100">
-      <div className="border-2 border-black p-6 rounded-lg shadow-lg bg-white">
+      <div className="border-2 relative border-black p-6 rounded-lg shadow-lg bg-white">
+        {loading && (
+          <div className=" rounded-lg absolute flex items-center justify-center inset-0 backdrop-blur-sm">
+            {<LoadingSpinner />}
+          </div>
+        )}
         <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>
         <form onSubmit={handleLoginForm} className="space-y-4">
           <label className="flex flex-col space-y-1">

@@ -1,9 +1,13 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { Account } from "../../interface";
 import { createNewUser } from "../../api/SupaApi";
 import { Mail, Lock, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const handleSignUpForm = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -21,13 +25,22 @@ export default function SignUp() {
       userAccount[values[0]] = values[1];
     }
 
-    const x = await createNewUser(userAccount);
-    console.log(x);
+    const newUser = await createNewUser(userAccount);
+    setLoading(true);
+    if (newUser) {
+      setLoading(false);
+      navigate("/login");
+    }
   };
 
   return (
     <div className="flex justify-center h-screen items-center bg-gray-100">
       <div className="border-2 border-black p-6 rounded-lg shadow-lg bg-white">
+        {loading && (
+          <div className="rounded-lg absolute flex items-center justify-center inset-0 backdrop-blur-sm">
+            {<LoadingSpinner />}
+          </div>
+        )}
         <h2 className="text-2xl font-semibold mb-4 text-center">Sign Up</h2>
         <form onSubmit={handleSignUpForm} className="space-y-4">
           <label className="flex flex-col space-y-1">
