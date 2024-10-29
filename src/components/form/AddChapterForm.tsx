@@ -9,7 +9,7 @@ interface AddChapterFormProps {
   book: string;
 }
 export const AddChapterForm = ({ book }: AddChapterFormProps) => {
-  const { addChapter, bookChapters } = useBookStore();
+  const { addChapter } = useBookStore();
 
   function handleChapterForm(e: FormEvent) {
     e.preventDefault();
