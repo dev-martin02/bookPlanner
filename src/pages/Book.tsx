@@ -20,15 +20,15 @@ export default function Book() {
     </div>
   ));
 
-  return (
+  return books.length === 0 ? (
+    <div className="flex justify-center items-center w-full mt-10">
+      <p className="text-gray-700 text-xl ">
+        You currently don't have any books! Would you like to add one?
+      </p>
+    </div>
+  ) : (
     <section className="mt-5 flex flex-col items-center md:grid md:grid-cols-3 md:grid-rows-3 gap-3">
-      {books.length === 0 ? (
-        <p className="text-gray-700 text-xl w-full">
-          You currently don't have any books! Would you like to add one?
-        </p>
-      ) : (
-        allBooks
-      )}
+      {allBooks}
     </section>
   );
 }
