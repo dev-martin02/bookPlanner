@@ -26,12 +26,28 @@ export default function Login() {
       formObj[key as keyof Account] = value as string;
     }
 
-    const response = await loginApi(formObj);
-    setLoading(true);
-    if (response) {
+    // Validate if the form info is in the database
+    try {
+      setLoading(true);
+      const response = await loginApi(formObj);
+
+      if ("message" in response) {
+        throw new Error(response.message);
+      }
+
       setCurrentUser(response);
       setLoading(false);
       navigate("/");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else if (typeof error === "string") {
+        alert(error); // For cases like "User Not found"
+      } else {
+        alert("An unexpected error occurred");
+      }
+    } finally {
+      setLoading(false); // Don't forget to set loading to false on error
     }
   };
 

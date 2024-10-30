@@ -8,7 +8,6 @@ import { getUserBook } from "../api/SupaApi";
 
 export default function Home() {
   const { currentUser, setFetchedBooks } = useBookStore();
-  console.log(currentUser);
   const accountButton =
     currentUser.name.length !== 0 ? (
       <button>{currentUser.name}</button>
@@ -33,21 +32,23 @@ export default function Home() {
   }, [currentUser]);
   return (
     <main className="max-w-4xl mx-auto p-6 ">
-      <h1 className="text-4xl font-bold flex gap-1 items-center justify-center text-blue-700 ">
-        <BookMarked size={35} /> Book Planner
-      </h1>
-      <header className="flex justify-between items-center mt-7">
-        <span className="font-semibold text-2xl text-blue-600 ">
-          All your Books
-        </span>
+      <header className="flex justify-between items-center mb-16">
+        <h1 className="text-4xl font-bold flex gap-1 items-center justify-center text-blue-700 ">
+          <BookMarked size={35} /> Book Planner
+        </h1>
         {accountButton}
       </header>
-      <button
-        className="border-2 mt-4 px-2 py-1 w-40 rounded flex justify-between bg-green-500 text-white border-green-500"
-        onClick={() => setDisplayForm(!displayForm)}
-      >
-        <BadgePlus /> Add New Book
-      </button>
+      <div className="flex align-middle items-center justify-between">
+        <span className="font-semibold text-xl text-blue-600 ">
+          All your Books
+        </span>
+        <button
+          className="border-2 px-2 py-1 w-40 rounded flex justify-between bg-green-600 text-white border-green-600"
+          onClick={() => setDisplayForm(!displayForm)}
+        >
+          <BadgePlus /> Add New Book
+        </button>
+      </div>
       {displayForm && <AddBookForm setDisplayForm={setDisplayForm} />}
       <Book />
     </main>

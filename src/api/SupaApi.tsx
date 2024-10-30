@@ -7,7 +7,7 @@ async function getUserProfile(id: string) {
   if (error) return error;
 
   const getUser = data.find((user) => user.id === id);
-  if (!getUser) return "User Not found";
+  if (!getUser) throw "User Not found";
   return getUser;
 }
 
