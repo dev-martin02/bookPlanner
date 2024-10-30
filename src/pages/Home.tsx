@@ -8,7 +8,7 @@ import { getUserBook } from "../api/SupaApi";
 
 export default function Home() {
   const { currentUser, setFetchedBooks } = useBookStore();
-
+  console.log(currentUser);
   const accountButton =
     currentUser.name.length !== 0 ? (
       <button>{currentUser.name}</button>

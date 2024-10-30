@@ -24,17 +24,30 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
       id: 0,
     };
 
-    for (const [key, name] of formData.entries()) {
-      if (key in newBook) {
-        const typedKey = key as keyof Book;
-        if (typedKey !== "id") {
-          newBook[typedKey] = name as string;
+    // Update the user obj
+    if (currentUser.id.length === 0) {
+      for (const [key, name] of formData.entries()) {
+        if (key in newBook) {
+          const typedKey = key as keyof Book;
+          newBook.userId = crypto.randomUUID() as string;
+
+          console.log(typedKey);
+          if (typedKey !== "id") {
+            newBook[typedKey] = name as string;
+          }
+        }
+      }
+    } else {
+      for (const [key, name] of formData.entries()) {
+        if (key in newBook) {
+          const typedKey = key as keyof Book;
+          if (typedKey !== "id") {
+            newBook[typedKey] = name as string;
+          }
         }
       }
     }
-
     newBook["id"] = generateUniqueID();
-
     const bookOnList = books.find(
       ({ bookName, author }) =>
         bookName.toLowerCase() === newBook.bookName.toLowerCase() &&
@@ -42,13 +55,18 @@ export const AddBookForm: React.FC<AddBookFormProps> = ({ setDisplayForm }) => {
     );
 
     if (!bookOnList) {
-      addBookToDB(newBook)
-        .then((response) => {
-          console.log(response);
-          addBook(newBook);
-          alert("new book was added it!");
-        })
-        .catch((e) => alert("there was an error " + e.message));
+      if (currentUser.id.length !== 0) {
+        addBookToDB(newBook)
+          .then((response) => {
+            console.log(response);
+            addBook(newBook);
+            alert("new book was added it!");
+          })
+          .catch((e) => alert("there was an error " + e.message));
+      } else {
+        addBook(newBook);
+        ("Book was added it to the list!");
+      }
       return;
     }
 

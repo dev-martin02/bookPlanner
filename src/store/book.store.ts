@@ -2,9 +2,11 @@ import { create } from "zustand";
 import { storeObj } from "../interface";
 
 export const useBookStore = create<storeObj>((set) => ({
-  currentAvaibleBookID: 1,
+  currentAvailableBookID: 1,
   incrementId: () =>
-    set((state) => ({ currentAvaibleBookID: state.currentAvaibleBookID + 1 })),
+    set((state) => ({
+      currentAvailableBookID: state.currentAvailableBookID + 1,
+    })),
 
   books: [],
   addBook: (newBook) =>

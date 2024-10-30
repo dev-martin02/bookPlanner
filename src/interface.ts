@@ -5,7 +5,7 @@ export interface Note {
 }
 
 export type storeObj = {
-  currentAvaibleBookID: number;
+  currentAvailableBookID: number;
   books: Array<Book> | [];
   addBook: (newBook: Book) => void;
   incrementId: () => void;
