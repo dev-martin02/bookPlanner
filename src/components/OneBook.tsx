@@ -60,7 +60,7 @@ export default function OneBook() {
         </legend>
         <button
           onClick={() => setShowChapterForm(!showChapterForm)}
-          className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 flex items-center"
+          className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 delay-75 flex items-center"
         >
           <PlusCircle className="w-5 h-5 mr-2" />
           Add a chapter
@@ -85,38 +85,43 @@ export default function OneBook() {
         </div>
       </fieldset>
 
-      <h2 className="text-xl font-semibold mb-4">
-        General Notes about the book
-      </h2>
-      <button
-        onClick={() => setShowNoteForm(!showNoteForm)}
-        className="mb-4 px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 flex items-center"
-      >
-        <PlusCircle className="w-5 h-5 mr-2" />
-        Add Note
-      </button>
-      {showNoteForm && <AddNoteForm book={bookId} />}
+      {/* General Note Section  */}
+      <section>
+        <header className="flex justify-between">
+          <h2 className="text-lg sm:text-xl font-semibold">
+            General Notes about the book
+          </h2>
+          <button
+            onClick={() => setShowNoteForm(!showNoteForm)}
+            className="px-3 py-1 sm:px-4 sm:py-2  bg-purple-500 text-white rounded hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 flex items-center"
+          >
+            <PlusCircle className="w-5 h-5 mr-2" />
+            Add Note
+          </button>
+        </header>
+        {showNoteForm && <AddNoteForm book={bookId} />}
 
-      {/* General note section */}
-      <ul className="space-y-2">
-        {generalNoteArr
-          .filter((book) => book.bookId === bookId)
-          .map(({ note, id }) => (
-            <li
-              key={id}
-              className="flex justify-between items-center p-2 bg-gray-100 rounded"
-            >
-              <p>{note}</p>
-              <button
-                onClick={() => deleteGeneralNote(id)}
-                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 flex items-center"
+        {/* Add a cancel button which is going to hide the 'form' section if add note section is positive and hide the add note button at the top of this comment */}
+        <ul className="space-y-2">
+          {generalNoteArr
+            .filter((book) => book.bookId === bookId)
+            .map(({ note, id }) => (
+              <li
+                key={id}
+                className="flex justify-between items-center p-2 bg-gray-100 rounded"
               >
-                <Trash2 className="w-4 h-4 mr-1" />
-                Delete
-              </button>
-            </li>
-          ))}
-      </ul>
+                <p>{note}</p>
+                <button
+                  onClick={() => deleteGeneralNote(id)}
+                  className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 flex items-center"
+                >
+                  <Trash2 className="w-4 h-4 mr-1" />
+                  Delete
+                </button>
+              </li>
+            ))}
+        </ul>
+      </section>
     </div>
   );
 }

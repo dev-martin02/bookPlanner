@@ -12,7 +12,7 @@ export default function Book() {
       <div className=" flex flex-row-reverse">
         <Link
           to={`book/${id}`}
-          className="px-2 py-1 flex gap-2 w-32 border-2 rounded bg-blue-500 text-white border-blue-500 hover:bg-blue-400 hover:border-blue-400  "
+          className="px-2 py-1 flex gap-2 w-32 border-2 rounded bg-blue-500 text-white border-blue-500 hover:bg-blue-400 hover:border-blue-400 delay-75 "
         >
           <Eye /> See notes
         </Link>
@@ -32,7 +32,3 @@ export default function Book() {
     </section>
   );
 }
-
-/*
-  Create a section where the user can write their chapter name and also sub-chapters, they can write what they learn from both of them, induvidually but also can make a summary or a note of chapter
-*/

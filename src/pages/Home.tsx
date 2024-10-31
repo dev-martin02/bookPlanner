@@ -43,7 +43,7 @@ export default function Home() {
           All your Books
         </span>
         <button
-          className="border-2 px-2 py-1 w-40 rounded flex justify-between bg-green-600 text-white border-green-600"
+          className="border-2 px-2 py-1 w-40 rounded flex justify-between bg-green-500 text-white border-green-500 hover:bg-green-600 hover:border-green-600 delay-100"
           onClick={() => setDisplayForm(!displayForm)}
         >
           <BadgePlus /> Add New Book

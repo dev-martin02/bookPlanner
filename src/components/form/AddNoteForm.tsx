@@ -29,8 +29,11 @@ export const AddNoteForm = ({ book }: AddChapterFormProps) => {
     addGeneralNote(note);
   }
   return (
-    <form onSubmit={handleNoteForm} className="mt-8 space-y-2">
-      <div className="relative">
+    <form
+      onSubmit={handleNoteForm}
+      className="mt-8 space-y-2 flex justify-between items-center"
+    >
+      <div className="relative w-9/12">
         <input
           type="text"
           name="note"
