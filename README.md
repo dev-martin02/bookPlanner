@@ -12,8 +12,6 @@ Welcome to *BookPlanner*! This web app is designed to help readers organize thei
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
-- [Credits](#credits)
 - [Contact](#contact)
 
 ---
