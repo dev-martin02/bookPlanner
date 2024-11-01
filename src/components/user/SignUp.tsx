@@ -24,12 +24,18 @@ export default function SignUp() {
       //@ts-ignore
       userAccount[values[0]] = values[1];
     }
-
-    const newUser = await createNewUser(userAccount);
     setLoading(true);
-    if (newUser) {
-      setLoading(false);
+
+    try {
+      const newUser = await createNewUser(userAccount);
       navigate("/login");
+      console.log(newUser);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      alert(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 

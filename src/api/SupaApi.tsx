@@ -1,6 +1,12 @@
 import { supabase } from "../database/Supabase";
 import { Account, Book, Chapter } from "../interface";
 
+interface Profile {
+  id: string;
+  name: string;
+  email: string;
+}
+
 // Get User
 async function getUserProfile(id: string) {
   const { data, error } = await supabase.from("profile").select();
@@ -31,25 +37,59 @@ async function createProfile(profileData: {
 
   return { error };
 }
-export async function createNewUser(userObj: Account) {
-  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-    email: userObj.email,
-    password: userObj.password,
-  });
-  if (signUpError) {
-    return signUpError;
+async function deleteAuthUser() {
+  const { error } = await supabase.auth.admin.deleteUser(
+    (await supabase.auth.getUser()).data.user?.id || ""
+  );
+  if (error) {
+    console.error("Failed to delete auth user:", error);
+    // We log but don't throw here to avoid masking the original error
   }
+}
 
-  if (signUpData.user) {
-    const profileData = {
+export async function createNewUser(userObj: Account) {
+  let authUserCreated = false;
+
+  try {
+    // 1. Sign up the user
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
+      {
+        email: userObj.email,
+        password: userObj.password,
+      }
+    );
+
+    if (signUpError) {
+      throw new Error(`Signup failed: ${signUpError.message}`);
+    }
+
+    if (!signUpData.user) {
+      throw new Error("User creation failed: No user data returned");
+    }
+
+    authUserCreated = true;
+
+    // 2. Create the profile
+    const profileData: Profile = {
       id: signUpData.user.id,
       name: userObj.name,
       email: userObj.email,
     };
 
-    const { error: profileDataErr } = await createProfile(profileData);
-    if (profileDataErr) return profileDataErr;
+    const { error: profileError } = await createProfile(profileData);
+
+    if (profileError) {
+      throw new Error(`Profile creation failed: ${profileError.message}`);
+    }
+
     return { user: signUpData.user };
+  } catch (error) {
+    // If profile creation failed but auth user was created,
+    // attempt to clean up the auth user
+    if (authUserCreated) {
+      await deleteAuthUser();
+    }
+    throw error;
   }
 }
 
