@@ -86,23 +86,31 @@ export default function OneBook() {
       </fieldset>
 
       {/* General Note Section  */}
-      <section>
-        <header className="flex justify-between">
+      <section className="flex flex-col">
+        <header className="flex justify-between items-center">
           <h2 className="text-lg sm:text-xl font-semibold">
             General Notes about the book
           </h2>
-          <button
-            onClick={() => setShowNoteForm(!showNoteForm)}
-            className="px-3 py-1 sm:px-4 sm:py-2  bg-purple-500 text-white rounded hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 flex items-center"
-          >
-            <PlusCircle className="w-5 h-5 mr-2" />
-            Add Note
-          </button>
+          {!showNoteForm && (
+            <button
+              onClick={() => setShowNoteForm(!showNoteForm)}
+              type="submit"
+              className="bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex justify-center w-14 items-center p-2"
+            >
+              <PlusCircle className="w-5 h-5 " />
+            </button>
+          )}
         </header>
-        {showNoteForm && <AddNoteForm book={bookId} />}
+        {showNoteForm && (
+          <AddNoteForm
+            book={bookId}
+            showNoteForm={showNoteForm}
+            setShowNoteForm={setShowNoteForm}
+          />
+        )}
 
         {/* Add a cancel button which is going to hide the 'form' section if add note section is positive and hide the add note button at the top of this comment */}
-        <ul className="space-y-2">
+        <ul className="space-y-2 mt-5">
           {generalNoteArr
             .filter((book) => book.bookId === bookId)
             .map(({ note, id }) => (

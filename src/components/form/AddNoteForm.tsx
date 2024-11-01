@@ -1,13 +1,19 @@
 import { FormEvent } from "react";
 import { Note } from "../../interface";
 import { useBookStore } from "../../store/book.store";
-import { PlusCircle } from "lucide-react";
+import { EyeOff, PlusCircle } from "lucide-react";
 
 interface AddChapterFormProps {
   book: string;
+  showNoteForm: boolean;
+  setShowNoteForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const AddNoteForm = ({ book }: AddChapterFormProps) => {
+export const AddNoteForm = ({
+  book,
+  showNoteForm,
+  setShowNoteForm,
+}: AddChapterFormProps) => {
   const { addGeneralNote } = useBookStore();
   function handleNoteForm(e: FormEvent) {
     e.preventDefault();
@@ -29,11 +35,8 @@ export const AddNoteForm = ({ book }: AddChapterFormProps) => {
     addGeneralNote(note);
   }
   return (
-    <form
-      onSubmit={handleNoteForm}
-      className="mt-8 space-y-2 flex justify-between items-center"
-    >
-      <div className="relative w-9/12">
+    <form onSubmit={handleNoteForm} className="mt-8 space-y-2 flex flex-col ">
+      <div className="relative w-full">
         <input
           type="text"
           name="note"
@@ -49,13 +52,20 @@ export const AddNoteForm = ({ book }: AddChapterFormProps) => {
           Note
         </label>
       </div>
-      <button
-        type="submit"
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center"
-      >
-        <PlusCircle className="w-5 h-5 mr-2" />
-        Add
-      </button>
+      <div className="flex w-44 justify-between">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex justify-center w-20 items-center p-2"
+        >
+          <PlusCircle className="w-5 h-5 " />
+        </button>
+        <button
+          onClick={() => setShowNoteForm(!showNoteForm)}
+          className="bg-gray-500 w-20  text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 flex justify-center items-center p-2"
+        >
+          <EyeOff className="w-5 h-5 " />
+        </button>
+      </div>
     </form>
   );
 };
