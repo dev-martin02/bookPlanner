@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useBookStore } from "../../store/book.store";
 import { FormEvent, useState } from "react";
-import { PlusCircle, Trash2, X } from "lucide-react";
+import { EyeOff, PlusCircle, Trash2, X } from "lucide-react";
 import { ChapterNote } from "../../interface";
 
 export const Chapter = () => {
@@ -15,6 +15,11 @@ export const Chapter = () => {
   const [showNoteForm, setShowNoteForm] = useState(false);
 
   const [showQuestions, setShowQuestion] = useState(false);
+
+  function HideFormAndShowQuestion() {
+    setShowNoteForm(false);
+    setShowQuestion(!showQuestions);
+  }
 
   // Questions
   const deepUnderstandingQuestions = [
@@ -58,8 +63,8 @@ export const Chapter = () => {
   }
 
   const formElement = (
-    <form onSubmit={handleNoteForm} className="mt-8 space-y-2">
-      <div className="relative">
+    <form onSubmit={handleNoteForm} className=" mt-8 space-y-2 flex flex-col ">
+      <div className="relative w-full">
         <input
           type="text"
           name="note"
@@ -68,20 +73,27 @@ export const Chapter = () => {
         />
         <label
           className="absolute left-2 -top-6 text-gray-600 text-sm transition-all 
-               peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 
-               peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-gray-600 
-               peer-focus:text-sm"
+                     peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 
+                     peer-placeholder-shown:top-2 peer-focus:-top-6 peer-focus:text-gray-600 
+                     peer-focus:text-sm"
         >
           Note
         </label>
       </div>
-      <button
-        type="submit"
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center"
-      >
-        <PlusCircle className="w-5 h-5 mr-2" />
-        Add
-      </button>
+      <div className="flex w-44 justify-between">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex justify-center w-20 items-center p-2"
+        >
+          <PlusCircle className="w-5 h-5 " />
+        </button>
+        <button
+          onClick={() => setShowNoteForm(!showNoteForm)}
+          className="bg-gray-500 w-20  text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 flex justify-center items-center p-2"
+        >
+          <EyeOff className="w-5 h-5 " />
+        </button>
+      </div>
     </form>
   );
 
@@ -97,19 +109,22 @@ export const Chapter = () => {
             <h2 className="text-2xl font-bold text-center mb-6 flex items-center justify-center">
               {chapterName}
             </h2>
-            <button
-              onClick={() => setShowNoteForm(!showNoteForm)}
-              className="mb-4 px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 flex items-center"
-            >
-              <PlusCircle className="w-5 h-5 mr-2" />
-              Add Note
-            </button>
-            <button
-              className="px-4 py-2 bg-green-400 border-green-400 rounded hover:bg-green-500"
-              onClick={() => setShowQuestion(!showQuestions)}
-            >
-              Deep your understanding
-            </button>
+
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg sm:text-xl font-semibold">
+                Notes about this Chapters
+              </h3>
+              {!showNoteForm && (
+                <button
+                  onClick={() => setShowNoteForm(!showNoteForm)}
+                  type="submit"
+                  className="bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex justify-center w-14 items-center p-2"
+                >
+                  <PlusCircle className="w-5 h-5 " />
+                </button>
+              )}
+            </div>
+
             {showQuestions && (
               <div className="absolute flex items-center inset-0 justify-center backdrop-blur-md">
                 <button onClick={() => setShowQuestion(!showQuestions)}>
@@ -123,7 +138,7 @@ export const Chapter = () => {
               </div>
             )}
             {showNoteForm && formElement}
-            <ul className="space-y-2">
+            <ul className="space-y-2 mt-5">
               {chapterNoteArr.map(({ note, id, chapterId }) => {
                 if (chapterId === urlChapterId.chapterId) {
                   return (
@@ -144,6 +159,13 @@ export const Chapter = () => {
                 }
               })}
             </ul>
+
+            <button
+              className="px-4 py-2 text-white bg-green-500 mt-5 rounded hover:bg-green-600"
+              onClick={HideFormAndShowQuestion}
+            >
+              Deep your understanding
+            </button>
           </>
         ))
       )}

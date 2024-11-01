@@ -1,4 +1,4 @@
-import { PlusCircle } from "lucide-react";
+import { EyeOff, PlusCircle } from "lucide-react";
 import { FormEvent } from "react";
 import { Chapter } from "../../interface";
 import { useBookStore } from "../../store/book.store";
@@ -7,8 +7,14 @@ import { generateUniqueID } from "../../util/util";
 
 interface AddChapterFormProps {
   book: string;
+  showChapterForm: boolean;
+  setShowChapterForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export const AddChapterForm = ({ book }: AddChapterFormProps) => {
+export const AddChapterForm = ({
+  book,
+  showChapterForm,
+  setShowChapterForm,
+}: AddChapterFormProps) => {
   const { addChapter } = useBookStore();
 
   function handleChapterForm(e: FormEvent) {
@@ -84,13 +90,20 @@ export const AddChapterForm = ({ book }: AddChapterFormProps) => {
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        <PlusCircle className="w-5 h-5 mr-2" />
-        Add Chapter
-      </button>
+      <div className="flex w-44 justify-between">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex justify-center w-20 items-center p-2"
+        >
+          <PlusCircle className="w-5 h-5 " />
+        </button>
+        <button
+          onClick={() => setShowChapterForm(!showChapterForm)}
+          className="bg-gray-500 w-20  text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 flex justify-center items-center p-2"
+        >
+          <EyeOff className="w-5 h-5 " />
+        </button>
+      </div>
     </form>
   );
 };

@@ -58,14 +58,23 @@ export default function OneBook() {
         <legend className="text-2xl font-semibold text-blue-500 px-2">
           Chapters
         </legend>
-        <button
-          onClick={() => setShowChapterForm(!showChapterForm)}
-          className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 delay-75 flex items-center"
-        >
-          <PlusCircle className="w-5 h-5 mr-2" />
-          Add a chapter
-        </button>
-        {showChapterForm && <AddChapterForm book={bookId} />}
+        {!showChapterForm && (
+          <button
+            onClick={() => setShowChapterForm(!showChapterForm)}
+            className=" mb-4 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center"
+          >
+            <PlusCircle className="w-5 h-5 mr-2" />
+            Add a Chapter
+          </button>
+        )}
+
+        {showChapterForm && (
+          <AddChapterForm
+            book={bookId}
+            setShowChapterForm={setShowChapterForm}
+            showChapterForm={showChapterForm}
+          />
+        )}
         <div className="space-y-2">
           {bookChapters.map(({ chapterNum, chapterName, id }) => (
             <div
@@ -109,7 +118,6 @@ export default function OneBook() {
           />
         )}
 
-        {/* Add a cancel button which is going to hide the 'form' section if add note section is positive and hide the add note button at the top of this comment */}
         <ul className="space-y-2 mt-5">
           {generalNoteArr
             .filter((book) => book.bookId === bookId)
